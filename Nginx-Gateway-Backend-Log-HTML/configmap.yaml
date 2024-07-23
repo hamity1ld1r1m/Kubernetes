@@ -1,0 +1,111 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-index-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="tr">
+    <head>
+      <meta charset="UTF-8">
+      <title>Backend</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #e9ecef;
+          color: #333;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+        .container {
+          background: #ffffff;
+          border-radius: 10px;
+          padding: 25px;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+          max-width: 700px;
+          width: 90%;
+          text-align: center;
+        }
+        h1 {
+          color: #007bff;
+          margin-bottom: 20px;
+          font-size: 24px;
+          font-weight: 600;
+        }
+        .info {
+          font-size: 18px;
+        }
+        .info p {
+          margin: 12px 0;
+          padding: 10px;
+          border: 1px solid #dee2e6;
+          border-radius: 8px;
+          background-color: #f8f9fa;
+        }
+        .info span {
+          font-weight: bold;
+          color: #495057;
+        }
+        .datetime {
+          display: flex;
+          justify-content: center;
+          gap: 15px;
+          margin-bottom: 20px;
+        }
+        @media (max-width: 600px) {
+          .datetime {
+            flex-direction: column;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>Backend</h1>
+        <div class="info">
+          <div class="datetime">
+            <p>Tarih: <span id="date"></span></p>
+            <p>Saat: <span id="time"></span></p>
+          </div>
+          <p>İşletim Sistemi: <span id="os"></span></p>
+          <p>İşlemci Çekirdek Sayısı: <span id="cpu"></span></p>
+          <p>Toplam Bellek: <span id="memory"></span></p>
+          <p>Ekran Çözünürlüğü: <span id="resolution"></span></p>
+          <p>Tarayıcı Dili: <span id="language"></span></p>
+          <p>Ekran Boyutu: <span id="screen-size"></span></p>
+          <p>Tarayıcı: <span id="browser"></span></p>
+        </div>
+      </div>
+      <script>
+        // Tarih ve saat
+        const now = new Date();
+        document.getElementById('date').innerText = now.toLocaleDateString('tr-TR');
+        document.getElementById('time').innerText = now.toLocaleTimeString('tr-TR');
+
+        // İşletim sistemi bilgisi
+        document.getElementById('os').innerText = navigator.platform || 'Bilgi yok';
+
+        // İşlemci çekirdek sayısı
+        document.getElementById('cpu').innerText = (navigator.hardwareConcurrency || 'Bilgi yok') + ' çekirdek';
+
+        // Toplam bellek bilgisi
+        document.getElementById('memory').innerText = (navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Bilgi mevcut değil');
+
+        // Ekran çözünürlüğü
+        document.getElementById('resolution').innerText = `${window.screen.width} x ${window.screen.height}`;
+
+        // Tarayıcı dili
+        document.getElementById('language').innerText = navigator.language || 'Bilgi yok';
+
+        // Ekran boyutu
+        document.getElementById('screen-size').innerText = `${window.innerWidth} x ${window.innerHeight}`;
+
+        // Tarayıcı adı ve versiyonu
+        document.getElementById('browser').innerText = navigator.userAgent || 'Bilgi yok';
+      </script>
+    </body>
+    </html>

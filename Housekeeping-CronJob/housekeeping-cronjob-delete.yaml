@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: housekeeping-cronjob-delete
+  namespace: housekeeping
+spec:
+  schedule: '0 21 * * *'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: housekeeping-sa
+          containers:
+          - name: housekeeping
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              echo "ImagePullBackOff, ErrImagePull, Pending, Error veya CrashLoopBackOff durumunda olan podları kontrol ediliyor"
+              # Podları durumlarıyla listele ve ImagePullBackOff, ErrImagePull, Pending, Error veya CrashLoopBackOff durumunda olanları filtrele
+              failed_pods=$(kubectl get pods -n housekeeping --no-headers | grep -E "ImagePullBackOff|ErrImagePull|Pending|CrashLoopBackOff|Error" | awk '{print $1}')
+              if [ ! -z "$failed_pods" ]; then
+                echo "Listelenen Podlar Siliniyor: $failed_pods"
+                kubectl delete pod -n housekeeping $failed_pods
+              else
+                echo "ImagePullBackOff, ErrImagePull, Pending, CrashLoopBackOff veya Error durumunda olan pod bulunamadı"
+              fi
+          restartPolicy: OnFailure

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-backend
+  template:
+    metadata:
+      labels:
+        app: nginx-backend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log/nginx
+        - name: html
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: logs
+        persistentVolumeClaim:
+          claimName: nginx-logs-pvc
+      - name: html
+        configMap:
+          name: nginx-index-html
+          items:
+          - key: index.html
+            path: index.html

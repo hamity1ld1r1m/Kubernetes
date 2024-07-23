@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: housekeeping
+  name: 'cronjob-deployment-delete'
+spec:
+  selector:
+    matchLabels:
+      app: cronjob-deployment-delete
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cronjob-deployment-delete
+    spec:
+      containers:
+        - name: container
+          image: nginx:latesttttt  # Yanlış image adı
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%

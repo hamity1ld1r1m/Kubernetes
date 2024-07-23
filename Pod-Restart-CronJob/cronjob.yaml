@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: restart-cronjob
+spec:
+  schedule: "0 21* * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: cronjob-deployment
+          containers:
+          - name: kubectl-container
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              kubectl --namespace default rollout restart deployment/cronjob-deployment
+              kubectl --namespace default rollout status deployment/cronjob-deployment
+          restartPolicy: OnFailure
