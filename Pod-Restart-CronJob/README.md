@@ -97,7 +97,7 @@ schedule: '* * * * *'
 Yıldızlar sırasıyla; Dakika, Saat, Ayın Günü, Ay ve Haftanın Günü’ne denk gelir. Daha fazla bilgi için <https://crontab.guru/> adresini ziyaret edebilirsiniz.
 
 ## Log Kontrolü
-Housekeeping CronJob’un loglarını kontrol etmek için
+CronJob’un loglarını kontrol etmek için
 ```
 kubectl logs <pod-adı>
 ```
