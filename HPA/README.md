@@ -58,7 +58,14 @@ Metin düzenleme aracından kaydedip çıktıktan sonra aşağıdaki komutla dep
 ```
 kubectl apply -f hpa-deployment.yaml
 ```
-
+## Deployment ve Pod Durumunu Kontrol Etme
+Deployment ve Pod durumunu kontrol etmek için aşağıdaki komutu kullanabilirsiniz.
+```
+kubectl get deployments -n hpa
+```
+```
+kubectl get pods -n hpa
+```
 ## Horizontal Pod Autoscaler (HPA) Oluşturma
 
 Bu çalışmamızdaki amaç, CPU kullanımı %75 veya memory kullanımı %70 olduğunda hpa-deployment’ın pod sayısını otomatik olarak 5'e kadar artırarak yükü dağıtmaktır. Bu değerlerin altına düştüğünde ise, hpa-deployment’ın pod sayısını otomatik olarak 1'e düşürerek podları azaltması beklenir.
@@ -112,4 +119,8 @@ Metin düzenleme aracından kaydedip çıktıktan sonra aşağıdaki komutla HPA
 ```
 kubectl apply -f hpa.yaml
 ```
-
+## HPA Durumunu Kontrol Etme
+HPA'nın durumunu kontrol etmek için aşağıdaki komutu kullanabilirsiniz.
+```
+kubectl get hpa -n hpa
+```
