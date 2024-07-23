@@ -1,6 +1,6 @@
 ﻿# Kubernetes Dashboard GUI Kurulumu
  
- ![Dashboard Kurulumu](Kubernetes/resim/resim.png)
+![Dashboard Kurulumu](Kubernetes/resim/resim.png)
 
 Bu klasör, Kubernetes dashboard GUI kurulumu ile ilgili konfigürasyon dosyalarını içerir.
 
